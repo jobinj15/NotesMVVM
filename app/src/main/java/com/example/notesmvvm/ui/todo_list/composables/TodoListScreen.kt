@@ -1,5 +1,6 @@
 package com.example.notesmvvm.ui.todo_list.composables
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,8 @@ fun TodoListScreen(
     val todos = viewModel.todos.collectAsState(initial = emptyList())
     val scaffoldState = rememberScaffoldState()
 
+    val TAG = "TodoListScreen"
+
     // call this event independently of the composable , this will prevent multiple calls when the composable
     //is redrawn
     LaunchedEffect(key1 = true) {
@@ -57,6 +60,7 @@ fun TodoListScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 viewModel.onEvent(TodoListEvent.OnAddTodoClick)
+                Log.e(TAG,"floatingActionButton AddTodo!!")
             }) {
                 Icon(
                     imageVector = Icons.Default.Add,

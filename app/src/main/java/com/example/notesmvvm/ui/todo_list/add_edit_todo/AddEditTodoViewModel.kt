@@ -1,5 +1,6 @@
 package com.example.notesmvvm.ui.todo_list.add_edit_todo
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,6 +21,8 @@ class AddEditTodoViewModel @Inject constructor(
     private val repository: TodoRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    val TAG = "AddEditTodoViewModel";
 
     var todo by mutableStateOf<Todo?>(null)
     private set
@@ -59,7 +62,7 @@ class AddEditTodoViewModel @Inject constructor(
 
             is AddEditTodoEvent.OnSaveTodoClick ->{
                 viewModelScope.launch {
-                    if(title.isNotBlank()){
+                    if(title.isBlank()){
                         sendUIEvent(UiEvent.ShowSnackBar(
                             message = "the title can't be empty"
                         ))
@@ -81,6 +84,9 @@ class AddEditTodoViewModel @Inject constructor(
 
 
     private fun sendUIEvent(event: UiEvent) {
+
+        Log.e(TAG,"sendUIEvent: $event")
+
         viewModelScope.launch {
             _uiEvent.send(event)
         }

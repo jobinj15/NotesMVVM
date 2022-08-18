@@ -1,5 +1,6 @@
 package com.example.notesmvvm.ui.todo_list
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notesmvvm.data.Todo
@@ -17,6 +18,7 @@ class TodoListViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
 
+    val TAG = "TodoListViewModel"
     val todos = repository.getTodos();
 
 
@@ -64,6 +66,7 @@ class TodoListViewModel @Inject constructor(
 
     private fun sendUIEvent(event: UiEvent) {
         viewModelScope.launch {
+             Log.e(TAG,"Sending event $event")
             _uiEvent.send(event)
         }
     }
